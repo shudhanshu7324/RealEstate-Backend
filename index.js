@@ -21,7 +21,12 @@ app.listen(3000, () => {
 });
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173', // Your development frontend URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'], // Include other headers as needed
+    credentials: true,
+  }));
 app.use(cookieParser());
 
 app.use('/api/user', userRouter);
