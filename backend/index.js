@@ -1,4 +1,5 @@
 import express from "express";
+import cors from 'cors'
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRouter from "./routes/user.route.js";
@@ -21,6 +22,12 @@ app.listen(3000, () => {
 });
 
 app.use(express.json());
+app.use(cors({
+    origin: 'http://localhost:5173', // Your development frontend URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'], // Include other headers as needed
+    credentials: true,
+  }));
 app.use(cookieParser());
 
 app.use('/api/user', userRouter);
