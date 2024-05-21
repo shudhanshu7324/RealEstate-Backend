@@ -40,7 +40,7 @@ export default function SignUp() {
       setLoading(false);
       setError(error.message);
     }
-    console.log(data);
+    // console.log(data);
   }
 
   console.log(formData);
