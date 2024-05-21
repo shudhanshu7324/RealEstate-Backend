@@ -8,7 +8,6 @@ import {
   FaBath,
   FaBed,
   FaChair,
-  FaMapMarkedAlt,
   FaMapMarkerAlt,
   FaParking,
   FaShare,
@@ -135,6 +134,11 @@ export default function Listing() {
                 {listing.furnished ? "Furnished" : "Unfurnished"}
               </li>
             </ul>
+            {!currentUser && (
+              <p className="text-red-500 font-semibold">
+                Please <a href="/login">login</a> to contact landlord.
+              </p>
+            )}
             {currentUser && listing.userRef !== currentUser._id && !contact && (
               <button
                 onClick={() => setContact(true)}
