@@ -9,8 +9,7 @@ import { app } from '../firebase';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-
-function CreateListing() {
+export default function CreateListing() {
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const [files, setFiles] = useState([]);
@@ -32,7 +31,7 @@ function CreateListing() {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  // console.log(formData);
+  console.log(formData);
   const handleImageSubmit = (e) => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
       setUploading(true);
@@ -155,7 +154,7 @@ function CreateListing() {
     }
   };
   return (
-<main className='p-3 max-w-4xl mx-auto'>
+    <main className='p-3 max-w-4xl mx-auto'>
       <h1 className='text-3xl font-semibold text-center my-7'>
         Create a Listing
       </h1>
@@ -192,28 +191,53 @@ function CreateListing() {
           />
           <div className='flex gap-6 flex-wrap'>
             <div className='flex gap-2'>
-              <input type='checkbox' id='sale' className='w-5' onChange={handleChange}
-                checked={formData.type === 'sale'}/>
+              <input
+                type='checkbox'
+                id='sale'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.type === 'sale'}
+              />
               <span>Sell</span>
             </div>
             <div className='flex gap-2'>
-              <input type='checkbox' id='rent' className='w-5' onChange={handleChange}
-                checked={formData.type === 'rent'}/>
+              <input
+                type='checkbox'
+                id='rent'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.type === 'rent'}
+              />
               <span>Rent</span>
             </div>
             <div className='flex gap-2'>
-              <input type='checkbox' id='parking' className='w-5' onChange={handleChange}
-                checked={formData.parking}/>
+              <input
+                type='checkbox'
+                id='parking'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.parking}
+              />
               <span>Parking spot</span>
             </div>
             <div className='flex gap-2'>
-              <input type='checkbox' id='furnished' className='w-5' onChange={handleChange}
-                checked={formData.furnished}/>
+              <input
+                type='checkbox'
+                id='furnished'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.furnished}
+              />
               <span>Furnished</span>
             </div>
             <div className='flex gap-2'>
-              <input type='checkbox' id='offer' className='w-5' onChange={handleChange}
-                checked={formData.offer}/>
+              <input
+                type='checkbox'
+                id='offer'
+                className='w-5'
+                onChange={handleChange}
+                checked={formData.offer}
+              />
               <span>Offer</span>
             </div>
           </div>
@@ -249,7 +273,7 @@ function CreateListing() {
                 type='number'
                 id='regularPrice'
                 min='50'
-                max='100000000'
+                max='10000000'
                 required
                 className='p-3 border border-gray-300 rounded-lg'
                 onChange={handleChange}
@@ -257,11 +281,12 @@ function CreateListing() {
               />
               <div className='flex flex-col items-center'>
                 <p>Regular price</p>
-                <span className='text-xs'>(Rs / month)</span>
+                {formData.type === 'rent' && (
+                  <span className='text-xs'>($ / month)</span>
+                )}
               </div>
             </div>
-      
-                {formData.offer && (
+            {formData.offer && (
               <div className='flex items-center gap-2'>
                 <input
                   type='number'
@@ -275,20 +300,23 @@ function CreateListing() {
                 />
                 <div className='flex flex-col items-center'>
                   <p>Discounted price</p>
-                  <span className='text-xs'>(Rs / month)</span>
+
+                  {formData.type === 'rent' && (
+                    <span className='text-xs'>($ / month)</span>
+                  )}
                 </div>
-                </div>
-                )}
-            </div>
+              </div>
+            )}
           </div>
-          <div className='flex flex-col flex-1 gap-4'>
+        </div>
+        <div className='flex flex-col flex-1 gap-4'>
           <p className='font-semibold'>
             Images:
             <span className='font-normal text-gray-600 ml-2'>
               The first image will be the cover (max 6)
             </span>
           </p>
-            <div className='flex gap-4'>
+          <div className='flex gap-4'>
             <input
               onChange={(e) => setFiles(e.target.files)}
               className='p-3 border border-gray-300 rounded w-full'
@@ -306,7 +334,7 @@ function CreateListing() {
               {uploading ? 'Uploading...' : 'Upload'}
             </button>
           </div>
-        <p className='text-red-700 text-sm'>
+          <p className='text-red-700 text-sm'>
             {imageUploadError && imageUploadError}
           </p>
           {formData.imageUrls.length > 0 &&
@@ -339,7 +367,5 @@ function CreateListing() {
         </div>
       </form>
     </main>
-  )
+  );
 }
-
-export default CreateListing
